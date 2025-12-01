@@ -46,6 +46,34 @@ def count_when_passing_zero(input):
 
     return zero_count
 
+def count_when_passing_zero_mk2(input):
+    zero_count = 0
+    position = 50
+    for entry in input.splitlines():
+        initial_position = position
+        if entry[0] == "L":
+            position -= int(entry[1:])
+        elif entry[0] == "R":
+            position += int(entry[1:])
+        else:
+            raise Exception("Unexpected movement instruction")
+        
+        if initial_position == 0 and position < 0:
+            zero_count -= 1
+        
+        while (position < 0):
+            zero_count += 1
+            position += 100
+
+        if position == 0:
+            zero_count += 1
+
+        while (position >= 100):
+            zero_count += 1
+            position -= 100     
+
+    return zero_count
+
 def main():
 
     sys_args = sys.argv
@@ -68,6 +96,8 @@ def main():
         zero_count = count_when_landing_on_zero(input)
     elif method_to_use == 2:
         zero_count = count_when_passing_zero(input)
+    elif method_to_use == 3:
+        zero_count = count_when_passing_zero_mk2(input)
     else:
         raise Exception("Must provide count method")
 
