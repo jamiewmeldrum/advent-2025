@@ -1,6 +1,6 @@
 import sys
 
-def process_passcode(input):
+def process_passcode_method_1(input):
     
     passcode = 0
     ranges = input.split(",")
@@ -12,6 +12,27 @@ def process_passcode(input):
             first, second = value[:q + r], value[q + r:]
             if first == second:
                 passcode += int(value)
+
+    return passcode
+
+
+def principal_period(s):
+    i = (s+s).find(s, 1, -1)
+    return None if i == -1 else s[:i]
+
+def process_passcode_method_2(input):
+    
+    passcode = 0
+    ranges = input.split(",")
+    for number_range in ranges:
+        start, end = number_range.split("-")
+        for value in range(int(start), int(end) + 1):
+            
+            str_val = str(value)
+            repeating_unit = principal_period(str_val)
+
+            if repeating_unit:
+                passcode += value
 
     return passcode
 
@@ -35,7 +56,9 @@ def main():
     
     passcode = 0
     if method_to_use == 1:
-        passcode = process_passcode(input)
+        passcode = process_passcode_method_1(input)
+    elif method_to_use == 2:
+        passcode = process_passcode_method_2(input)
     else:
         raise Exception("Must provide method")
 
