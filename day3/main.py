@@ -1,29 +1,47 @@
 import sys
 
-def process_battery_joltage_1(input):   
+def process_battery(battery, digits_required):
+    if len(battery) < digits_required:
+        raise Exception("Battery string not long enough")
+    
+    if not battery.isnumeric():
+        raise Exception("Battery string must be numeric")
+    
+    first_part, second_part = battery[:len(battery)-digits_required], battery[len(battery)-digits_required:]
+
+    combination = ""
+    for i, current_num in enumerate(second_part):
+
+        biggest_num, position = current_num, None
+        
+        for j, num in enumerate(reversed(first_part)):
+            if num >= biggest_num:
+                biggest_num, position = num, j
+        
+        if position != None:
+            first_part = first_part[len(first_part)-position:] + second_part[i]
+        else:
+            first_part = []
+
+        combination = combination + biggest_num
+
+    return combination
+
+
+def process_battery_joltage_1(input):  
+
+    passcode = 0
+    for battery in input.splitlines():
+        passcode += int(process_battery(battery, 2))
+
+    return passcode
+
+
+def process_battery_joltage_2(input):   
     
     passcode = 0
     for battery in input.splitlines():
-        print(battery)
-
-        first_digit = None
-        second_digit = None
-        highest_previous_number = None
-        for num in reversed(battery):
-
-            if not first_digit:
-                first_digit = num
-                highest_previous_number = first_digit
-            elif first_digit and not second_digit:
-                first_digit, second_digit = num, first_digit
-                highest_previous_number = max(first_digit, second_digit)
-            elif num >= first_digit:
-                first_digit = num
-                second_digit = highest_previous_number
-                if num > highest_previous_number:
-                    highest_previous_number = num
-        
-        passcode += int(str(first_digit) + str(second_digit))
+        passcode += int(process_battery(battery, 12))
 
     return passcode
 
@@ -48,8 +66,8 @@ def main():
     passcode = 0
     if method_to_use == 1:
         passcode = process_battery_joltage_1(input)
-    # elif method_to_use == 2:
-    #     passcode = process_passcode_method_2(input)
+    elif method_to_use == 2:
+        passcode = process_battery_joltage_2(input)
     else:
         raise Exception("Must provide method")
 
