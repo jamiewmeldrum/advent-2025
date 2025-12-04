@@ -20,11 +20,41 @@ def count_accessible_rolls_of_paper(input):
             if grid.get_value(x, y) != "@":
                 continue
 
-            if not grid.has_nearest_neighbours_with_value(x, y, 4, "@"):
+            if grid.count_nearest_neighbours_with_value(x, y, "@") < 4:
                 accessible_rolls += 1
 
     return accessible_rolls
-        
+
+
+def count_accessible_rolls_of_paper_until_exhausted(input):
+
+    rows = input.splitlines()
+    width = len(rows[0])
+    height = len(rows)
+    grid = Grid(width, height)
+
+    for y in range(0, len(rows)):
+        row = rows[y]
+        for x in range(0, len(row)):
+            grid.add_element(x, y, row[x])
+
+    accessible_rolls = 0
+    rolls_this_pass = True
+    while rolls_this_pass:
+        rolls_this_pass = False        
+        for y in range(0, height):
+            for x in range(0, width):
+
+                if grid.get_value(x, y) != "@":
+                    continue
+
+                if grid.count_nearest_neighbours_with_value(x, y, "@") < 4:
+                    grid.add_element(x, y, ".")
+                    rolls_this_pass = True
+                    accessible_rolls += 1
+
+    return accessible_rolls
+
 
 def main():
 
@@ -46,8 +76,8 @@ def main():
     passcode = 0
     if method_to_use == 1:
         passcode = count_accessible_rolls_of_paper(input)
-    # elif method_to_use == 2:
-    #     passcode = process_battery_joltage_2(input)
+    elif method_to_use == 2:
+        passcode = count_accessible_rolls_of_paper_until_exhausted(input)
     else:
         raise Exception("Must provide method")
 

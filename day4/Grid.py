@@ -33,7 +33,7 @@ class Grid:
             neighbours_to_check.append((x, y))
 
 
-    def has_nearest_neighbours_with_value(self, x, y, neighbours, value):
+    def count_nearest_neighbours_with_value(self, x, y, value):
 
         neighbours_to_check = []
 
@@ -51,7 +51,7 @@ class Grid:
             if self.grid[neighbour] == value:
                 matching_count += 1
 
-        return matching_count >= neighbours
+        return matching_count
     
 
     def print(self):
