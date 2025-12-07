@@ -13,7 +13,7 @@ class Grid:
         if x > self.width - 1 or x < 0:
             raise Exception("Invalid location provided for x")
         
-        if y > self.width - 1 or y < 0:
+        if y > self.height - 1 or y < 0:
             raise Exception("Invalid location provided for y")
         
         self.grid[(x,y)] = element

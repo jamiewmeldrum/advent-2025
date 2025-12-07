@@ -1,5 +1,7 @@
 import sys
 
+from calculation import Calculation
+
 def do_maths_homework(input):
 
     rows = input.splitlines()
@@ -7,27 +9,42 @@ def do_maths_homework(input):
 
     calculations = []
     for row in rows:
-        #print(calculations)
-        #print(row)
-        entries = row.split(" ")
-        entries = list(filter(None, entries))
-        #print(entries)
+        #NOT GUARENTEED TO BE 4 chars!
+        entries = [(row[i:i+4]) for i in range(0, len(row), 4)]     
+
+
         for i in range(0, len(entries)):
             if len(calculations) == len(entries):
-                if calculations[i][1]:
-                    if calculations[i][0] == "+":
-                        calculations[i][1] += int(entries[i])
-                    elif calculations[i][0] == "*":
-                        calculations[i][1] *= int(entries[i])
-                else:
-                    calculations[i][1] = int(entries[i])
+                calculations[i].add_number(entries[i])
             else:
-                calculations.append([entries[i], 0])
+                calculations.append(Calculation(entries[i].strip()))
 
     count = 0
-    for calculation in calculations:
-        
-        count += calculation[1]
+    for calculation in calculations: 
+        #Small extra step to ensure the calculation numbers are flipped before beinf computed       
+        count += calculation.compute()
+
+    return count
+
+
+def do_maths_homework_flipped(input):
+
+    rows = input.splitlines()
+    rows = list(reversed(rows))
+
+    calculations = []
+    for row in rows:
+        entries = [(row[i:i+4]) for i in range(0, len(row), 4)]     
+        for i in range(0, len(entries)):
+            if len(calculations) == len(entries):
+                calculations[i].add_number(entries[i])
+            else:
+                calculations.append(Calculation(entries[i].strip()))
+
+    count = 0
+    for calculation in calculations: 
+        #Small extra step to ensure the calculation numbers are flipped before beinf computed       
+        count += calculation.flip_and_compute()
 
     return count
 
@@ -51,8 +68,8 @@ def main():
     passcode = 0
     if method_to_use == 1:
         passcode = do_maths_homework(input)
-    # elif method_to_use == 2:
-    #     passcode = count_all_fresh_ingredients(input)
+    elif method_to_use == 2:
+        passcode = do_maths_homework_flipped(input)
     else:
         raise Exception("Must provide method")
 
