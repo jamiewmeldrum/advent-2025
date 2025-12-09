@@ -1,6 +1,6 @@
 import sys
 
-from coordinate_pair import CoordinatePair
+from util.coordinate_pair import CoordinatePair
 from circuit import Circuit
 
 def connect_circuits(input, iterations):
