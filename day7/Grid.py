@@ -31,6 +31,12 @@ class Grid:
         else:
             None
 
+    def get_row(self, y):
+        row = []
+        for x in range(0, self.width):
+            row.append(self.grid[(x, y)])
+        return row
+
     
     def count_char(self, char):
         count = 0
@@ -51,5 +57,11 @@ class Grid:
         for y in range(0, self.height):
             line = ""
             for x in range(0, self.width):
-                line += self.get_value(x,y)
+                line += str(self.get_value(x,y))
             print(line)
+
+    
+    def copy(self):
+        other = Grid(self.width, self.height)
+        other.grid = self.grid.copy()
+        return other
