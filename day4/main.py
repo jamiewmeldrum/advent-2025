@@ -1,5 +1,6 @@
 import sys
-from Grid import Grid
+
+from util.grid import Grid
 
 def count_accessible_rolls_of_paper(input):
 

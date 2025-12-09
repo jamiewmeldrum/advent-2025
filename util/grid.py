@@ -23,6 +23,11 @@ class Grid:
         
         if self.element_in_range(x, y):
             self.grid[(x,y)] = element
+
+    
+    def append_if_in_range(self, x, y, neighbours_to_check):
+        if self.element_in_range(x, y):
+            neighbours_to_check.append((x, y))
     
     
     def get_value(self, x, y):
@@ -65,3 +70,24 @@ class Grid:
         other = Grid(self.width, self.height)
         other.grid = self.grid.copy()
         return other
+    
+
+    def count_nearest_neighbours_with_value(self, x, y, value):
+
+        neighbours_to_check = []
+
+        self.append_if_in_range(x-1, y-1, neighbours_to_check)
+        self.append_if_in_range(x, y-1, neighbours_to_check)
+        self.append_if_in_range(x+1, y-1, neighbours_to_check)
+        self.append_if_in_range(x-1, y, neighbours_to_check)
+        self.append_if_in_range(x+1, y, neighbours_to_check)
+        self.append_if_in_range(x-1, y+1, neighbours_to_check)
+        self.append_if_in_range(x, y+1, neighbours_to_check)
+        self.append_if_in_range(x+1, y+1, neighbours_to_check)
+        
+        matching_count = 0
+        for neighbour in neighbours_to_check:
+            if self.grid[neighbour] == value:
+                matching_count += 1
+
+        return matching_count

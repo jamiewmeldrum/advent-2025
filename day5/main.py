@@ -1,6 +1,6 @@
 import sys
 
-from number_range import NumberRange
+from util.number_range import NumberRange
 
 from itertools import groupby
 

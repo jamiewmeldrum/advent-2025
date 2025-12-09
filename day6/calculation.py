@@ -7,7 +7,6 @@ class Calculation:
         self.numbers.append(str(number[0:3]))
 
     def flip(self):
-        print("PRE FLIP")
         print(self.numbers)        
         numbers = []
         number_count = len(self.numbers)
@@ -20,7 +19,6 @@ class Calculation:
 
 
     def compute(self):
-        print("PRE COMPUTE")
         print(self.numbers)
         total = int(self.numbers[0])
         for i in range(1, len(self.numbers)):

@@ -1,6 +1,6 @@
 import sys
 
-from Grid import Grid
+from util.grid import Grid
 
 def process_and_count_routes(input):
 
